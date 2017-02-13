@@ -143,7 +143,7 @@ public class GameModel {
                 return InputResult.Pop;
             }
         } else {
-            return InputResult.Change;
+            return InputResult.Nothing;
         }
         return InputResult.Nothing;
     }
