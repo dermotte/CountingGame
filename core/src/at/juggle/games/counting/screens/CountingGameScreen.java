@@ -37,13 +37,17 @@ public class CountingGameScreen extends ScreenAdapter {
     BitmapFont buttonFont;
 
     private float moveY, animationTime;
-    private final TextureRegion[] balloonSprite;
+    private final TextureRegion[] balloonRedSprite, balloonBlueSprite, balloonGreenSprite;
 
 
     public CountingGameScreen(CountingGame game) {
         this.parentGame = game;
-        Texture sheet = parentGame.getAssetManager().get("sprites/balloon.png");
-        balloonSprite = TextureRegion.split(sheet, 128, 192)[0];
+        Texture balloonRedSheet = parentGame.getAssetManager().get("sprites/balloon.png");
+        Texture balloonBlueSheet = parentGame.getAssetManager().get("sprites/balloonblue.png");
+        Texture balloonGreenSheet = parentGame.getAssetManager().get("sprites/balloongreen.png");
+        balloonRedSprite = TextureRegion.split(balloonRedSheet, 128, 192)[0];
+        balloonBlueSprite = TextureRegion.split(balloonBlueSheet, 128, 192)[0];
+        balloonGreenSprite = TextureRegion.split(balloonGreenSheet, 128, 192)[0];
 
         buttonFont = parentGame.getAssetManager().get("menu/Ravie_72.fnt");
         backgroundImage = parentGame.getAssetManager().get("menu/menu_background.jpg");
@@ -55,7 +59,7 @@ public class CountingGameScreen extends ScreenAdapter {
         cam.update();
 
         batch = new SpriteBatch();
-        model = new GameModel(1, CountingGame.numberOfBalloons, balloonSprite, buttonFont);
+        model = new GameModel(1, CountingGame.numberOfBalloons, balloonRedSprite, balloonBlueSprite, balloonGreenSprite, buttonFont);
         model.resetGameState();
     }
 

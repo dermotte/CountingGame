@@ -30,6 +30,7 @@ public class CountingGame extends ApplicationAdapter {
 	public static final int GAME_HEIGHT = 1080;
 
 	public static int numberOfBalloons = 10;
+    public static int difficulty = 0; // 0 is easy, 1 is medium, 2 is hard.
 
 
 	@Override
@@ -48,6 +49,8 @@ public class CountingGame extends ApplicationAdapter {
 		assMan.load("credits/gradient_top.png", Texture.class);
 		assMan.load("credits/gradient_bottom.png", Texture.class);
 		assMan.load("sprites/balloon.png", Texture.class);
+		assMan.load("sprites/balloonblue.png", Texture.class);
+		assMan.load("sprites/balloongreen.png", Texture.class);
 		// for the sounds
 		soundManager.preload(assMan);
 

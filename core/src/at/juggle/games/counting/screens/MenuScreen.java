@@ -33,7 +33,7 @@ public class MenuScreen extends ScreenAdapter {
     Texture backgroundImage;
     BitmapFont menuFont;
 
-    String[] menuStrings = {"Play", "Balloons", "Exit"};
+    String[] menuStrings = {"Play", "Balloons", "Difficulty", "Exit"};
     int currentMenuItem = 0;
 
     int numberOfBallonsIndex = 0;
@@ -75,7 +75,10 @@ public class MenuScreen extends ScreenAdapter {
             if (i == currentMenuItem) menuFont.setColor(0.2f, 0.2f, 0.8f, 1f);
             else menuFont.setColor(0f, 0f, 0f, 1f);
             String menuString = menuStrings[i];
-            if (menuString.startsWith("Balloons")) menuString += ": " + getNumberOfBallons() + " max.";
+            if (menuString.startsWith("Balloons"))
+                menuString += ": " + getNumberOfBallons() + " max.";
+            else if (menuString.startsWith("Difficulty"))
+                menuString += ": " + ((CountingGame.difficulty == 0) ? "easy" : ((CountingGame.difficulty == 1) ? "medium" : "hard"));
             menuFont.draw(batch, menuString, offsetLeft, CountingGame.GAME_HEIGHT - offsetTop - i * offsetY);
         }
         batch.end();
@@ -100,6 +103,9 @@ public class MenuScreen extends ScreenAdapter {
             if (menuStrings[currentMenuItem].equals("Exit")) {
                 Gdx.app.exit();
                 parentGame.getSoundManager().playEvent("explode");
+            } else if (menuStrings[currentMenuItem].equals("Difficulty")) {
+                CountingGame.difficulty++;
+                CountingGame.difficulty %= 3;
             } else if (menuStrings[currentMenuItem].equals("Play")) {
                 parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.Game);
             } else if (menuStrings[currentMenuItem].equals("Balloons")) {
@@ -119,6 +125,9 @@ public class MenuScreen extends ScreenAdapter {
                         // it's there
                         if (menuStrings[i].equals("Exit")) {
                             Gdx.app.exit();
+                        } else if (menuStrings[i].equals("Difficulty")) {
+                            CountingGame.difficulty++;
+                            CountingGame.difficulty %= 3;
                         } else if (menuStrings[i].equals("Play")) {
                             parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.Game);
                         } else if (menuStrings[i].equals("Balloons")) {
