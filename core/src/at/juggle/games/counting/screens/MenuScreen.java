@@ -33,7 +33,13 @@ public class MenuScreen extends ScreenAdapter {
     Texture backgroundImage;
     BitmapFont menuFont;
 
-    String[] menuStrings = {"Play", "Balloons", "Difficulty", "Exit"};
+    private final String difficulty = "Herausforderung";
+    private final String ende = "Ende";
+    private final String ballons = "Ballons";
+    private final String zahlen = "Zahlen";
+    private final String reihen = "Reihen";
+
+    String[] menuStrings = {zahlen, reihen, ballons, difficulty};//, ende};
     int currentMenuItem = 0;
 
     int numberOfBallonsIndex = 0;
@@ -48,6 +54,7 @@ public class MenuScreen extends ScreenAdapter {
         backgroundImage = parentGame.getAssetManager().get("menu/menu_background.jpg");
         menuFont = parentGame.getAssetManager().get("menu/Ravie_72.fnt");
         menuFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        menuFont.getData().setScale(0.9f);
         // Create camera that projects the game onto the actual screen size.
         cam = new OrthographicCamera(CountingGame.GAME_WIDTH, CountingGame.GAME_HEIGHT);
 
@@ -72,13 +79,14 @@ public class MenuScreen extends ScreenAdapter {
         batch.draw(backgroundImage, 0, 0, CountingGame.GAME_WIDTH, CountingGame.GAME_HEIGHT);
         // draw Strings ...
         for (int i = 0; i < menuStrings.length; i++) {
+
             if (i == currentMenuItem) menuFont.setColor(0.2f, 0.2f, 0.8f, 1f);
             else menuFont.setColor(0f, 0f, 0f, 1f);
             String menuString = menuStrings[i];
-            if (menuString.startsWith("Balloons"))
+            if (menuString.startsWith(ballons))
                 menuString += ": " + getNumberOfBallons() + " max.";
-            else if (menuString.startsWith("Difficulty"))
-                menuString += ": " + ((CountingGame.difficulty == 0) ? "easy" : ((CountingGame.difficulty == 1) ? "medium" : "hard"));
+            else if (menuString.startsWith(difficulty))
+                menuString += ": " + ((CountingGame.difficulty == 0) ? "einfach" : ((CountingGame.difficulty == 1) ? "mittel" : "schwer"));
             menuFont.draw(batch, menuString, offsetLeft, CountingGame.GAME_HEIGHT - offsetTop - i * offsetY);
         }
         batch.end();
@@ -100,15 +108,17 @@ public class MenuScreen extends ScreenAdapter {
             System.out.println("Previous level in music ...");
             parentGame.getSoundManager().addLevel(-1);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            if (menuStrings[currentMenuItem].equals("Exit")) {
+            if (menuStrings[currentMenuItem].equals(ende)) {
                 Gdx.app.exit();
                 parentGame.getSoundManager().playEvent("explode");
-            } else if (menuStrings[currentMenuItem].equals("Difficulty")) {
+            } else if (menuStrings[currentMenuItem].equals(difficulty)) {
                 CountingGame.difficulty++;
                 CountingGame.difficulty %= 3;
-            } else if (menuStrings[currentMenuItem].equals("Play")) {
-                parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.Game);
-            } else if (menuStrings[currentMenuItem].equals("Balloons")) {
+            } else if (menuStrings[currentMenuItem].equals(zahlen)) {
+                parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.CountingGame);
+            } else if (menuStrings[currentMenuItem].equals(reihen)) {
+                parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.SortingGame);
+            } else if (menuStrings[currentMenuItem].equals(ballons)) {
                 numberOfBallonsIndex++;
                 numberOfBallonsIndex = numberOfBallonsIndex % numberOfBallonsValues.length;
                 CountingGame.numberOfBalloons = getNumberOfBallons();
@@ -123,14 +133,17 @@ public class MenuScreen extends ScreenAdapter {
                     float pos = CountingGame.GAME_HEIGHT - offsetTop - i * offsetY;
                     if (touchWorldCoords.y < pos && touchWorldCoords.y > pos - menuFont.getLineHeight()) {
                         // it's there
-                        if (menuStrings[i].equals("Exit")) {
+                        if (menuStrings[i].equals(ende)) {
                             Gdx.app.exit();
-                        } else if (menuStrings[i].equals("Difficulty")) {
+                        } else if (menuStrings[i].equals(difficulty)) {
                             CountingGame.difficulty++;
                             CountingGame.difficulty %= 3;
-                        } else if (menuStrings[i].equals("Play")) {
-                            parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.Game);
-                        } else if (menuStrings[i].equals("Balloons")) {
+                        } else if (menuStrings[i].equals(zahlen)) {
+                            parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.CountingGame);
+                        } else if (menuStrings[i].equals(reihen)) {
+                            System.out.println("reihen");
+                            parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.SortingGame);
+                        } else if (menuStrings[i].equals(ballons)) {
                             numberOfBallonsIndex++;
                             numberOfBallonsIndex = numberOfBallonsIndex % numberOfBallonsValues.length;
                             CountingGame.numberOfBalloons = getNumberOfBallons();

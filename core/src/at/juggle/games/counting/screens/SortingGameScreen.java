@@ -24,25 +24,25 @@ import com.badlogic.gdx.math.Vector3;
 import at.juggle.games.counting.CountingGame;
 import at.juggle.games.counting.CountingGameModel;
 import at.juggle.games.counting.ScreenManager;
+import at.juggle.games.counting.SortingGameModel;
 
 /**
  * Created by Mathias Lux, mathias@juggle.at,  on 04.02.2016.
  */
-public class CountingGameScreen extends ScreenAdapter {
+public class SortingGameScreen extends ScreenAdapter {
     private final SpriteBatch batch;
     private final OrthographicCamera cam;
+    private final BitmapFont buttonFont;
+    private final Texture backgroundImage;
     private CountingGame parentGame;
-    private CountingGameModel model;
+    private SortingGameModel model;
 
-    Texture backgroundImage, gradientTop, gradientBottom;
-    BitmapFont buttonFont;
 
-    private float moveY, animationTime;
     private final TextureRegion[] balloonRedSprite, balloonBlueSprite, balloonGreenSprite;
     private final ParticleEffect xplode;
 
 
-    public CountingGameScreen(CountingGame game) {
+    public SortingGameScreen(CountingGame game) {
         this.parentGame = game;
         Texture balloonRedSheet = parentGame.getAssetManager().get("sprites/balloon.png");
         Texture balloonBlueSheet = parentGame.getAssetManager().get("sprites/balloonblue.png");
@@ -62,14 +62,12 @@ public class CountingGameScreen extends ScreenAdapter {
         cam.update();
 
         batch = new SpriteBatch();
-        model = new CountingGameModel(1, CountingGame.numberOfBalloons, balloonRedSprite, balloonBlueSprite, balloonGreenSprite, buttonFont);
+        model = new SortingGameModel(1, CountingGame.numberOfBalloons, balloonRedSprite, balloonBlueSprite, balloonGreenSprite, buttonFont);
         model.resetGameState();
     }
 
     @Override
     public void render(float delta) {
-        moveY += delta * 12;
-        animationTime += delta * 8;
         handleInput();
         // camera:
         cam.update();
@@ -105,10 +103,10 @@ public class CountingGameScreen extends ScreenAdapter {
 
         if (Gdx.input.justTouched()) {
             Vector3 touchWorldCoords = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 1));
-            CountingGameModel.InputResult inputResult = model.handleTouch(touchWorldCoords);
-            if (inputResult == CountingGameModel.InputResult.Change) {
+            SortingGameModel.InputResult inputResult = model.handleTouch(touchWorldCoords);
+            if (inputResult == SortingGameModel.InputResult.Change) {
                 model.resetGameState();
-            } else if (inputResult == CountingGameModel.InputResult.Pop) {
+            } else if (inputResult == SortingGameModel.InputResult.Pop) {
                 xplode.setPosition(touchWorldCoords.x, touchWorldCoords.y);
                 xplode.reset();
                 String event = "blob0" + ((int) (Math.random() * 4) + 1);

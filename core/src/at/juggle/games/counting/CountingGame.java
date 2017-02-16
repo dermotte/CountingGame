@@ -14,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -51,6 +52,8 @@ public class CountingGame extends ApplicationAdapter {
 		assMan.load("sprites/balloon.png", Texture.class);
 		assMan.load("sprites/balloonblue.png", Texture.class);
 		assMan.load("sprites/balloongreen.png", Texture.class);
+		assMan.load("sprites/balloonpart.png", Texture.class);
+		assMan.load("sprites/xplode", ParticleEffect.class);
 		// for the sounds
 		soundManager.preload(assMan);
 

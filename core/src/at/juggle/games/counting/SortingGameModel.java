@@ -27,7 +27,7 @@ import at.juggle.games.counting.gameobjects.Balloon;
  * Created by mlux on 13.02.2017.
  */
 
-public class GameModel {
+public class SortingGameModel {
     private List<Balloon> balloonList = new LinkedList<Balloon>();
     private boolean dirty = true;
 
@@ -48,9 +48,9 @@ public class GameModel {
     int[] answers = new int[]{1, 2, 3};
     BitmapFont buttonFont = null;
     private int posButtonsY = 128;
-    private boolean answerIsGiven = false;
+    private int currentAnswer = 1;
 
-    public GameModel(int min, int max, TextureRegion[] balloonRedSprite, TextureRegion[] balloonBlueSprite, TextureRegion[] balloonGreenSprite, BitmapFont buttonFont) {
+    public SortingGameModel(int min, int max, TextureRegion[] balloonRedSprite, TextureRegion[] balloonBlueSprite, TextureRegion[] balloonGreenSprite, BitmapFont buttonFont) {
         this.min = min;
         this.max = max;
         this.spriteAnimRed = balloonRedSprite;
@@ -72,7 +72,7 @@ public class GameModel {
             badBallons = new Balloon[getRandomNumberOfBallons()];
 
         for (int i = 0; i < goodBallons.length; i++) {
-            goodBallons[i] = new Balloon(spriteAnimRed);
+            goodBallons[i] = new Balloon(spriteAnimRed, i+1);
             goodBallons[i].setX((float) ((CountingGame.GAME_WIDTH - spriteAnimRed[0].getRegionWidth() - 2 * offset) * Math.random()) + offset);
             goodBallons[i].setY((float) ((CountingGame.GAME_HEIGHT - spriteAnimRed[0].getRegionHeight() - 3 * offset) * Math.random()) + 2 * offset);
         }
@@ -99,7 +99,7 @@ public class GameModel {
             answers[i2] = tmp;
         }
 
-        answerIsGiven = false;
+        currentAnswer = 1;
         dirty = true;
     }
 
@@ -122,17 +122,8 @@ public class GameModel {
 
                 }
             }
-            balloonList.get(i).draw(batch, delta);
+            balloonList.get(i).draw(batch, delta, buttonFont);
             // batch.draw(spriteAnimRed[((int) (animationTime % spriteAnimRed.length))], sprite.getX(), sprite.getY());
-        }
-
-        for (int i = 0; i < answers.length; i++) {
-            String answer = Integer.toString(answers[i]);
-            layout.setText(buttonFont, answer);
-            if (answerIsGiven && answers[i] == numberOfSprites) buttonFont.setColor(Color.GREEN);
-            else buttonFont.setColor(Color.BLACK);
-            float posX = CountingGame.GAME_WIDTH / 4 * (i + 1) - layout.width / 2;
-            buttonFont.draw(batch, answer, posX, posButtonsY);
         }
 
     }
@@ -142,18 +133,7 @@ public class GameModel {
         layout.setText(buttonFont, Integer.toString(numberOfSprites));
 
         if (goodBallons.length < 1) return InputResult.Change;
-        if (t.y < posButtonsY + layout.height && !answerIsGiven) { // it's a button press
-            // check for the answers:
-            for (int i = 0; i < answers.length; i++) {
-                String answer = Integer.toString(answers[i]);
-                layout.setText(buttonFont, answer);
-                float posX = CountingGame.GAME_WIDTH / 4 * (i + 1) - layout.width / 2;
-                if (Math.abs(posX - t.x) < layout.width) { // got it!
-                    if (answers[i] == numberOfSprites) answerIsGiven = true;
-                }
-            }
-            return InputResult.Button;
-        } else if (answerIsGiven) { // check for the balloons ...
+        if (true) { // check for the balloons ...
             int toRemove = -1;
             float dist = Float.MAX_VALUE;
             for (int i = 0; i < goodBallons.length; i++) {
@@ -162,8 +142,11 @@ public class GameModel {
 
                 // take the nearest one to remove ...
                 if (t.dst(s) < Math.min(goodBallons[i].getWidth(), dist)) { // it's a collision
-                    toRemove = i;
-                    dist = t.dst(s);
+                    if (currentAnswer == goodBallons[i].getNumber()) {
+                        toRemove = i;
+                        dist = t.dst(s);
+                        currentAnswer++;
+                    }
                 }
             }
             if (toRemove > -1) {

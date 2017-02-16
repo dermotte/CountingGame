@@ -32,7 +32,7 @@ public class CreditsScreen extends ScreenAdapter {
     Texture backgroundImage, gradientTop, gradientBottom;
     BitmapFont creditsFont;
 
-    String[] credits = ("Counting Game by Mathias Lux\n" +
+    String[] credits = ("Counting CountingGame by Mathias Lux\n" +
             "All assets are public d0main\n" +
             "Cl0ne and adapt t0 y0ur will\n" +
             "\n" +
