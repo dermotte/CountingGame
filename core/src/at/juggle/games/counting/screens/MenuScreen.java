@@ -36,8 +36,8 @@ public class MenuScreen extends ScreenAdapter {
     private final String difficulty = "Herausforderung";
     private final String ende = "Ende";
     private final String ballons = "Ballons";
-    private final String zahlen = "Zahlen";
-    private final String reihen = "Reihen";
+    private final String zahlen = "Mengen";
+    private final String reihen = "Folgen";
 
     String[] menuStrings = {zahlen, reihen, ballons, difficulty};//, ende};
     int currentMenuItem = 0;
@@ -141,7 +141,6 @@ public class MenuScreen extends ScreenAdapter {
                         } else if (menuStrings[i].equals(zahlen)) {
                             parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.CountingGame);
                         } else if (menuStrings[i].equals(reihen)) {
-                            System.out.println("reihen");
                             parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.SortingGame);
                         } else if (menuStrings[i].equals(ballons)) {
                             numberOfBallonsIndex++;
