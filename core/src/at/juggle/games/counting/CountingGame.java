@@ -54,6 +54,9 @@ public class CountingGame extends ApplicationAdapter {
 		assMan.load("sprites/balloongreen.png", Texture.class);
 		assMan.load("sprites/balloonpart.png", Texture.class);
 		assMan.load("sprites/xplode", ParticleEffect.class);
+		assMan.load("sprites/button.png", Texture.class);
+		assMan.load("sprites/button_count.png", Texture.class);
+		assMan.load("sprites/button_question.png", Texture.class);
 		// for the sounds
 		soundManager.preload(assMan);
 

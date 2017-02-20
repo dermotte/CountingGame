@@ -152,7 +152,7 @@ public class CountingGameModel {
                     if (answers[i] == numberOfSprites) answerIsGiven = true;
                 }
             }
-            return InputResult.Button;
+            return answerIsGiven?InputResult.Button:InputResult.Nothing;
         } else if (answerIsGiven) { // check for the balloons ...
             int toRemove = -1;
             float dist = Float.MAX_VALUE;

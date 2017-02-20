@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by mlux on 14.02.2017.
@@ -25,6 +26,9 @@ public class Balloon extends Sprite {
     TextureRegion[] spriteAnim;
     private int number = -1;
     GlyphLayout layout = new GlyphLayout();
+
+
+    float speed = 1;
 
     public Balloon(TextureRegion[] spriteAnim) {
         super(spriteAnim[0]);
@@ -56,5 +60,20 @@ public class Balloon extends Sprite {
 
     public int getNumber() {
         return number;
+    }
+
+    public Vector2 dist(Balloon b) {
+        float x = getX() - b.getX();
+        float y = getY() - b.getY();
+        return new Vector2(x, y);
+    }
+
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }

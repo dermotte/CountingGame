@@ -95,10 +95,10 @@ public class SortingGameScreen extends ScreenAdapter {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ) {
             parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.Menu);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-            model.resetGameState();
+            // model.resetGameState();
         }
 
         if (Gdx.input.justTouched()) {

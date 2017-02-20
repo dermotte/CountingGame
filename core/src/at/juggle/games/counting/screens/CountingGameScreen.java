@@ -97,10 +97,10 @@ public class CountingGameScreen extends ScreenAdapter {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ) {
             parentGame.getScreenManager().setCurrentState(ScreenManager.ScreenState.Menu);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
-            model.resetGameState();
+            // model.resetGameState();
         }
 
         if (Gdx.input.justTouched()) {
@@ -108,6 +108,8 @@ public class CountingGameScreen extends ScreenAdapter {
             CountingGameModel.InputResult inputResult = model.handleTouch(touchWorldCoords);
             if (inputResult == CountingGameModel.InputResult.Change) {
                 model.resetGameState();
+            } else if (inputResult == CountingGameModel.InputResult.Button) {
+                // Todo .. play sound
             } else if (inputResult == CountingGameModel.InputResult.Pop) {
                 xplode.setPosition(touchWorldCoords.x, touchWorldCoords.y);
                 xplode.reset();
