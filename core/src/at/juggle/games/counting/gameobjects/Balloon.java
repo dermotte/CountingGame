@@ -49,7 +49,7 @@ public class Balloon extends Sprite {
             // find center of the baloon ...
             String str = "" + number;
             layout.setText(font, str);
-            font.draw(batch, str, getX() + getWidth()/2-layout.width/2, getY() + getHeight()/2+layout.height/2+16);
+            font.draw(batch, str, getX() + getWidth()/2-layout.width/2, getY() + getHeight()/2+layout.height/2+48);
         }
     }
 

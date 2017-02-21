@@ -67,10 +67,14 @@ public class SoundManager {
         loadSound(assMan, "sfx/blob04.ogg", "blob04");
 
         // music
-        loadMusic(assMan, "music/main_intro.ogg");
-        loadMusic(assMan, "music/main_lvl1.ogg");
-        loadMusic(assMan, "music/main_lvl2.ogg");
-        name2song.put("main", new Song("music/main_intro.ogg", null, new String[]{"music/main_lvl1.ogg", "music/main_lvl2.ogg"}));
+//        loadMusic(assMan, "music/main_intro.ogg");
+//        loadMusic(assMan, "music/main_lvl1.ogg");
+//        loadMusic(assMan, "music/main_lvl2.ogg");
+//        name2song.put("main", new Song("music/main_intro.ogg", null, new String[]{"music/main_lvl1.ogg", "music/main_lvl2.ogg"}));
+        // speech
+        for (int i = 1; i <= 20; i++) {
+            loadSound(assMan, "speech/de/"+i+".ogg", ""+i);
+        }
     }
 
     /**

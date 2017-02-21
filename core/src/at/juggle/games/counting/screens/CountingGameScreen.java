@@ -110,6 +110,7 @@ public class CountingGameScreen extends ScreenAdapter {
                 model.resetGameState();
             } else if (inputResult == CountingGameModel.InputResult.Button) {
                 // Todo .. play sound
+                parentGame.getSoundManager().playEvent(model.getNumberOfSprites()+"");
             } else if (inputResult == CountingGameModel.InputResult.Pop) {
                 xplode.setPosition(touchWorldCoords.x, touchWorldCoords.y);
                 xplode.reset();

@@ -78,7 +78,7 @@ public class MenuScreen extends ScreenAdapter {
 
 
         menuFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        menuFont.getData().setScale(0.9f);
+        // menuFont.getData().setScale(1f);
         // Create camera that projects the game onto the actual screen size.
         cam = new OrthographicCamera(CountingGame.GAME_WIDTH, CountingGame.GAME_HEIGHT);
 

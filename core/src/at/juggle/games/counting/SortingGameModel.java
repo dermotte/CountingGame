@@ -72,13 +72,16 @@ public class SortingGameModel {
             badBallons = new Balloon[getRandomNumberOfBallons()];
 
         for (int i = 0; i < goodBallons.length; i++) {
-            goodBallons[i] = new Balloon(spriteAnimRed, i+1);
+            if (CountingGame.difficulty==0)
+                goodBallons[i] = new Balloon(spriteAnimRed, i+1);
+            else
+                goodBallons[i] = new Balloon(getRandomColor(), i+1);
             goodBallons[i].setX((float) ((CountingGame.GAME_WIDTH - spriteAnimRed[0].getRegionWidth() - 2 * offset) * Math.random()) + offset);
             goodBallons[i].setY((float) ((CountingGame.GAME_HEIGHT - spriteAnimRed[0].getRegionHeight() - 3 * offset) * Math.random()) + 2 * offset);
         }
 
         for (int i = 0; i < badBallons.length; i++) {
-            badBallons[i] = new Balloon(spriteAnimBlue);
+            badBallons[i] = new Balloon(getRandomColor());
             badBallons[i].setX((float) ((CountingGame.GAME_WIDTH - spriteAnimBlue[0].getRegionWidth() - 2 * offset) * Math.random()) + offset);
             badBallons[i].setY((float) ((CountingGame.GAME_HEIGHT - spriteAnimBlue[0].getRegionHeight() - 3 * offset) * Math.random()) + 2 * offset);
         }
@@ -101,6 +104,13 @@ public class SortingGameModel {
 
         currentAnswer = 1;
         dirty = true;
+    }
+
+    private TextureRegion[] getRandomColor() {
+        int i = (int) (Math.random()*3);
+        if (i==0) return spriteAnimRed;
+        else if (i==1) return spriteAnimBlue;
+        return spriteAnimGreen;
     }
 
     private int getRandomNumberOfBallons() {

@@ -194,4 +194,8 @@ public class CountingGameModel {
         }
         return balloonList;
     }
+
+    public int getNumberOfSprites() {
+        return numberOfSprites;
+    }
 }
