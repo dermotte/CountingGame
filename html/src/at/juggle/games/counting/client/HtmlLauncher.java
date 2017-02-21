@@ -13,6 +13,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import at.juggle.games.counting.CountingGame;
+import at.juggle.games.counting.SpeechInterface;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -23,6 +24,11 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new CountingGame();
+                return new CountingGame(new SpeechInterface() {
+                        @Override
+                        public void speakOut(String text) {
+                                return;
+                        }
+                });
         }
 }

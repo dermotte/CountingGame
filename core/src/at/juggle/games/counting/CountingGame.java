@@ -9,6 +9,7 @@
 
 package at.juggle.games.counting;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -24,6 +25,7 @@ public class CountingGame extends ApplicationAdapter {
 	private AssetManager assMan;
 	private ScreenManager screenManager;
 	private SoundManager soundManager;
+    private SpeechInterface speechInterface;
 
 	// gives the original size for all screen working with the scaling orthographic camera
 	// set in DesktopLauncher to any resolution and it will be scaled automatically.
@@ -33,8 +35,11 @@ public class CountingGame extends ApplicationAdapter {
 	public static int numberOfBalloons = 10;
     public static int difficulty = 0; // 0 is easy, 1 is medium, 2 is hard.
 
+    public CountingGame(SpeechInterface speechInterface) {
+        this.speechInterface = speechInterface;
+    }
 
-	@Override
+    @Override
 	public void create() {
 		screenManager = new ScreenManager(this);
 		soundManager = new SoundManager(this);
@@ -116,6 +121,12 @@ public class CountingGame extends ApplicationAdapter {
 		soundManager.handle(Gdx.graphics.getDeltaTime());
 		// render the screen.
 		screenManager.getCurrentScreen().render(Gdx.graphics.getDeltaTime());
+	}
+
+	public void speakOut(String text) {
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            speechInterface.speakOut(text);
+		}
 	}
 
 	public AssetManager getAssetManager() {

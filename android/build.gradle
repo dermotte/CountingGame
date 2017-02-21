@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "at.juggle.games.counting"
-        minSdkVersion 8
+        minSdkVersion 21
         targetSdkVersion 23
     }
 }

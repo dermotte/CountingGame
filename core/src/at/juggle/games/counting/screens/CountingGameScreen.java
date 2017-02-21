@@ -21,6 +21,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.HashMap;
+
 import at.juggle.games.counting.CountingGame;
 import at.juggle.games.counting.CountingGameModel;
 import at.juggle.games.counting.ScreenManager;
@@ -41,8 +43,10 @@ public class CountingGameScreen extends ScreenAdapter {
     private final TextureRegion[] balloonRedSprite, balloonBlueSprite, balloonGreenSprite;
     private final ParticleEffect xplode;
 
+    private String[] zt = new String[] {"Null", "Eins", "Zwei", "Drei", "Vier", "Fünf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Elf", "Zwölf", "Dreizehn", "Vierzehn", "Fünfzehn", "Sechszehn", "Siebzehn", "Achtzehn", "Neunzehn", "Zwanzig"};
 
     public CountingGameScreen(CountingGame game) {
+
         this.parentGame = game;
         Texture balloonRedSheet = parentGame.getAssetManager().get("sprites/balloon.png");
         Texture balloonBlueSheet = parentGame.getAssetManager().get("sprites/balloonblue.png");
@@ -64,6 +68,7 @@ public class CountingGameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         model = new CountingGameModel(1, CountingGame.numberOfBalloons, balloonRedSprite, balloonBlueSprite, balloonGreenSprite, buttonFont);
         model.resetGameState();
+        parentGame.speakOut("Zähle die roten Ballons.");
     }
 
     @Override
@@ -110,7 +115,8 @@ public class CountingGameScreen extends ScreenAdapter {
                 model.resetGameState();
             } else if (inputResult == CountingGameModel.InputResult.Button) {
                 // Todo .. play sound
-                parentGame.getSoundManager().playEvent(model.getNumberOfSprites()+"");
+                parentGame.speakOut(model.getNumberOfSprites()+"");
+//                parentGame.getSoundManager().playEvent(model.getNumberOfSprites()+"");
             } else if (inputResult == CountingGameModel.InputResult.Pop) {
                 xplode.setPosition(touchWorldCoords.x, touchWorldCoords.y);
                 xplode.reset();

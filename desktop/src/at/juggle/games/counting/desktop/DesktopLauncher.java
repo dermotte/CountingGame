@@ -12,6 +12,7 @@ package at.juggle.games.counting.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import at.juggle.games.counting.CountingGame;
+import at.juggle.games.counting.SpeechInterface;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -21,6 +22,11 @@ public class DesktopLauncher {
 		config.height = 720;
 		// config.width = 1920;
 		// config.height = 1080;
-		new LwjglApplication(new CountingGame(), config);
+		new LwjglApplication(new CountingGame(new SpeechInterface() {
+			@Override
+			public void speakOut(String text) {
+				return;
+			}
+		}), config);
 	}
 }

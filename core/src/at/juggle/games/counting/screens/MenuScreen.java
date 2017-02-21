@@ -51,7 +51,7 @@ public class MenuScreen extends ScreenAdapter {
 
     float offsetLeft = CountingGame.GAME_WIDTH / 12, offsetTop = CountingGame.GAME_WIDTH / 12, offsetY = CountingGame.GAME_HEIGHT / 6;
 
-    Sprite startZaehlen,startMengen;
+    Sprite startZaehlen, startMengen;
     Balloon[] background = new Balloon[7];
     float buttonSize = 256f;
 
@@ -63,16 +63,16 @@ public class MenuScreen extends ScreenAdapter {
         menuFont = parentGame.getAssetManager().get("menu/Ravie_72.fnt");
 
         startZaehlen = new Sprite(parentGame.getAssetManager().get("sprites/button_count.png", Texture.class));
-        startZaehlen.setPosition(offsetLeft, CountingGame.GAME_HEIGHT-offsetTop-buttonSize);
+        startZaehlen.setPosition(offsetLeft, CountingGame.GAME_HEIGHT - offsetTop - buttonSize);
         startZaehlen.setScale(buttonSize / startZaehlen.getWidth());
         startMengen = new Sprite(parentGame.getAssetManager().get("sprites/button_question.png", Texture.class));
-        startMengen.setPosition(offsetLeft+3f*buttonSize/2f, CountingGame.GAME_HEIGHT-offsetTop-buttonSize);
+        startMengen.setPosition(offsetLeft + 3f * buttonSize / 2f, CountingGame.GAME_HEIGHT - offsetTop - buttonSize);
         startMengen.setScale(buttonSize / startMengen.getWidth());
 
         for (int i = 0; i < background.length; i++) {
             String[] fileName = {"sprites/balloon.png", "sprites/balloonblue.png", "sprites/balloongreen.png"};
-            background[i] = new Balloon(TextureRegion.split(parentGame.getAssetManager().get(fileName[(int) (Math.random()*3)], Texture.class), 128, 192)[0]);
-            background[i].setPosition(CountingGame.GAME_WIDTH/2f + ((float) (Math.random() * CountingGame.GAME_WIDTH/2f)), -((float) (Math.random() * CountingGame.GAME_HEIGHT)));
+            background[i] = new Balloon(TextureRegion.split(parentGame.getAssetManager().get(fileName[(int) (Math.random() * 3)], Texture.class), 128, 192)[0]);
+            background[i].setPosition(CountingGame.GAME_WIDTH / 2f + ((float) (Math.random() * CountingGame.GAME_WIDTH / 2f)), -((float) (Math.random() * CountingGame.GAME_HEIGHT)));
             background[i].setSpeed((float) Math.random() + 0.5f);
         }
 
@@ -84,6 +84,12 @@ public class MenuScreen extends ScreenAdapter {
 
         cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
         cam.update();
+
+        // setting the number of ballons if we come here a second time.
+        for (int i = 0; i < numberOfBallonsValues.length; i++) {
+            if (numberOfBallonsValues[i] == CountingGame.numberOfBalloons) numberOfBallonsIndex = i;
+
+        }
 
         batch = new SpriteBatch();
     }
@@ -104,20 +110,20 @@ public class MenuScreen extends ScreenAdapter {
 
         for (int i = 0; i < background.length; i++) {
             for (int j = 0; j < background.length; j++) {
-                if (i!=j && background[i]!=null && background[j]!=null) {
+                if (i != j && background[i] != null && background[j] != null) {
                     Vector2 dist = background[j].dist(background[i]);
-                    if (dist.len() <background[j].getHeight()) {
-                        float d = (background[i].getHeight()-dist.len())/background[i].getHeight();
-                        background[j].setPosition(background[j].getX() + dist.x*d, background[j].getY() + dist.y*d);
-                        background[i].setPosition(background[i].getX() - dist.x*d, background[i].getY() - dist.y*d);
+                    if (dist.len() < background[j].getHeight()) {
+                        float d = (background[i].getHeight() - dist.len()) / background[i].getHeight();
+                        background[j].setPosition(background[j].getX() + dist.x * d, background[j].getY() + dist.y * d);
+                        background[i].setPosition(background[i].getX() - dist.x * d, background[i].getY() - dist.y * d);
                     }
                 }
 
             }
-            background[i].setY(background[i].getY()+delta*100f*background[i].getSpeed());
+            background[i].setY(background[i].getY() + delta * 100f * background[i].getSpeed());
             background[i].draw(batch, delta);
-            if (background[i].getY()>CountingGame.GAME_HEIGHT*1.1f)
-                background[i].setPosition(CountingGame.GAME_WIDTH/2f + ((float) (Math.random() * CountingGame.GAME_WIDTH/2f)), -((float) (Math.random() * CountingGame.GAME_HEIGHT)));
+            if (background[i].getY() > CountingGame.GAME_HEIGHT * 1.1f)
+                background[i].setPosition(CountingGame.GAME_WIDTH / 2f + ((float) (Math.random() * CountingGame.GAME_WIDTH / 2f)), -((float) (Math.random() * CountingGame.GAME_HEIGHT)));
         }
 
         // draw buttons ...
@@ -142,6 +148,7 @@ public class MenuScreen extends ScreenAdapter {
     private void handleInput() {
         // touch
         if (Gdx.input.justTouched()) {
+            CountingGame.numberOfBalloons = getNumberOfBallons();
             Vector3 touchWorldCoords = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 1));
             // find the menu item ..
             if (startMengen.getBoundingRectangle().contains(touchWorldCoords.x, touchWorldCoords.y)) {

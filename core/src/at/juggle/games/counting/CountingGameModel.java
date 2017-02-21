@@ -47,7 +47,7 @@ public class CountingGameModel {
     float offset = 128;
     int[] answers = new int[]{1, 2, 3};
     BitmapFont buttonFont = null;
-    private int posButtonsY = 128;
+    private int posButtonsY = 192;
     private boolean answerIsGiven = false;
 
     public CountingGameModel(int min, int max, TextureRegion[] balloonRedSprite, TextureRegion[] balloonBlueSprite, TextureRegion[] balloonGreenSprite, BitmapFont buttonFont) {
